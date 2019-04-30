@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.adapter.TabDetailAdapter;
 import com.project.rafa.yourfood.data.Food;
+import com.project.rafa.yourfood.fragment.RecommendedFragment;
+import com.project.rafa.yourfood.fragment.TextFragment;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -45,16 +47,16 @@ public class DetailActivity extends AppCompatActivity {
 
         toolbar.setTitle(food.getName());
         img.setImageResource(food.getImg());
-        textView.setText(food.getIngredients());
+//        textView.setText(food.getIngredients());
 
 
 
         viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         adapter = new TabDetailAdapter(getSupportFragmentManager());
-        adapter.addFragment(new Fragment(), "Preparar", "nombre", "ingrediente", "preparacion");
-        adapter.addFragment(new Fragment(), "Ingredientes", "nombre", "ingrediente", "preparacion");
-        adapter.addFragment(new Fragment(), "Similares",  "nombre", "ingrediente", "preparacion");
+        adapter.addFragment(new TextFragment(), "Preparar", "nombre", "ingrediente", "preparacion");
+        adapter.addFragment(new TextFragment(), "Ingredientes", "nombre", "ingrediente", "preparacion");
+        adapter.addFragment(new RecommendedFragment(), "Similares",  "nombre", "ingrediente", "preparacion");
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
