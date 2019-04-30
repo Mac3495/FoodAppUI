@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "194115421719",
+    "firebase_url": "https://app-281.firebaseio.com",
+    "project_id": "app-281",
+    "storage_bucket": "app-281.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194115421719:android:6f84576c6fedd06d",
+        "android_client_info": {
+          "package_name": "com.project.rafa.yourfood"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194115421719-89l98ahkovthujuukpe9jp9uk7k37vao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeOPnxea5sVbvprJVuotEAg3t7Md0rxBc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194115421719-89l98ahkovthujuukpe9jp9uk7k37vao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
