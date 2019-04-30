@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mauth;
     FirebaseAuth.AuthStateListener auth_listener;
 
+    private ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         btnRegister = findViewById(R.id.btn_register);
         edUser = findViewById(R.id.ed_user);
         edPassword = findViewById(R.id.ed_password);
+        mProgressBar = findViewById(R.id.progress_bar);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,12 +98,14 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+        mProgressBar.setVisibility(View.VISIBLE);
         mauth.signInWithEmailAndPassword(user,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     FirebaseUser usera = FirebaseAuth.getInstance().getCurrentUser();
                     if(usera!=null){
+                        mProgressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginActivity.this, ":)", Toast.LENGTH_SHORT).show();
                         Intent welcome = new Intent(getApplicationContext(),MainActivity.class);
                         startActivity(welcome);
