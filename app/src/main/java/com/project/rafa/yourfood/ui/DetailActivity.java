@@ -3,6 +3,9 @@ package com.project.rafa.yourfood.ui;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,12 +14,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.project.rafa.yourfood.R;
+import com.project.rafa.yourfood.adapter.TabDetailAdapter;
 import com.project.rafa.yourfood.data.Food;
 
 public class DetailActivity extends AppCompatActivity {
 
     ImageView img;
     TextView textView;
+
+    private TabDetailAdapter adapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,19 @@ public class DetailActivity extends AppCompatActivity {
         toolbar.setTitle(food.getName());
         img.setImageResource(food.getImg());
         textView.setText(food.getIngredients());
+
+
+
+        viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        adapter = new TabDetailAdapter(getSupportFragmentManager());
+        adapter.addFragment(new Fragment(), "Preparar", "nombre", "ingrediente", "preparacion");
+        adapter.addFragment(new Fragment(), "Ingredientes", "nombre", "ingrediente", "preparacion");
+        adapter.addFragment(new Fragment(), "Similares",  "nombre", "ingrediente", "preparacion");
+        viewPager.setAdapter(adapter);
+
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(1, false);
 
     }
 }
