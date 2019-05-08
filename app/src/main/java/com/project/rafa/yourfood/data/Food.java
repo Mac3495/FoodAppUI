@@ -9,13 +9,13 @@ public class Food implements Serializable {
     private String preparation;
     private String type;
     private String foodId;
-    private int img;
+    private String img;
 
     public Food(){
 
     }
 
-    public Food(String name, String ingredients, String preparation, String type, String foodId, int img) {
+    public Food(String name, String ingredients, String preparation, String type, String foodId, String img) {
         this.name = name;
         this.ingredients = ingredients;
         this.preparation = preparation;
@@ -64,11 +64,11 @@ public class Food implements Serializable {
         this.name = name;
     }
 
-    public int getImg() {
+    public String getImg() {
         return img;
     }
 
-    public void setImg(int img) {
+    public void setImg(String img) {
         this.img = img;
     }
 }

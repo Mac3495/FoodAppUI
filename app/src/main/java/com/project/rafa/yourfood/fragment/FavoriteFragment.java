@@ -83,7 +83,7 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
 
         feedRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        foodAdapter = new FoodAdapter(this);
+        foodAdapter = new FoodAdapter(getActivity().getApplicationContext(), this);
         datos();
 
         feedRecycler.setAdapter(foodAdapter);
@@ -93,15 +93,6 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
 
     void datos(){
         List<Food> list = new ArrayList<>();
-        list.add(new Food("Hamburguejas al vapor", getString(R.string.large_text), getString(R.string.large_text), "Tipo 1", "", R.drawable.ham));
-        list.add(new Food("La pizza de don cangrejo", getString(R.string.large_text), getString(R.string.large_text), "Tipo 2", "", R.drawable.pizza));
-        list.add(new Food("No vives de ensalada", getString(R.string.large_text), getString(R.string.large_text), "Tipo 3", "", R.drawable.fru));
-        list.add(new Food("Hamburguejas al vapor", getString(R.string.large_text), getString(R.string.large_text), "Tipo 1", "", R.drawable.ham));
-        list.add(new Food("La pizza de don cangrejo",getString(R.string.large_text), getString(R.string.large_text), "Tipo 2", "", R.drawable.pizza));
-        list.add(new Food("No vives de ensalada", getString(R.string.large_text), getString(R.string.large_text), "Tipo 3", "", R.drawable.fru));
-        list.add(new Food("Hamburguejas al vapor", getString(R.string.large_text), getString(R.string.large_text), "Tipo 1", "", R.drawable.ham));
-
-
         foodAdapter.setDataset(list);
     }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.adapter.FoodAdapter;
 import com.project.rafa.yourfood.data.Food;
@@ -36,6 +43,8 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    List<Food> list = new ArrayList<>();
 
     RecyclerView feedRecycler;
     FoodAdapter foodAdapter;
@@ -83,7 +92,7 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
 
         feedRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        foodAdapter = new FoodAdapter(this);
+        foodAdapter = new FoodAdapter(getActivity().getApplicationContext(), this);
 
         datos();
 
@@ -93,15 +102,25 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
     }
 
     void datos(){
-        List<Food> list = new ArrayList<>();
-        list.add(new Food("Hamburguejas al vapor", getString(R.string.large_text), getString(R.string.large_text), "Tipo 1", "", R.drawable.ham));
-        list.add(new Food("La pizza de don cangrejo", getString(R.string.large_text), getString(R.string.large_text), "Tipo 2", "", R.drawable.pizza));
-        list.add(new Food("No vives de ensalada", getString(R.string.large_text), getString(R.string.large_text), "Tipo 3", "", R.drawable.fru));
-        list.add(new Food("Hamburguejas al vapor", getString(R.string.large_text), getString(R.string.large_text), "Tipo 1", "", R.drawable.ham));
-        list.add(new Food("La pizza de don cangrejo",getString(R.string.large_text), getString(R.string.large_text), "Tipo 2", "", R.drawable.pizza));
-        list.add(new Food("No vives de ensalada", getString(R.string.large_text), getString(R.string.large_text), "Tipo 3", "", R.drawable.fru));
-        list.add(new Food("Hamburguejas al vapor", getString(R.string.large_text), getString(R.string.large_text), "Tipo 1", "", R.drawable.ham));
+        //list.clear();
 
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        database.collection("food").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                list.clear();
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot doc : task.getResult()){
+                        Food food = doc.toObject(Food.class);
+                        list.add(food);
+                    }
+                }
+            }
+        });
         foodAdapter.setDataset(list);
     }
 

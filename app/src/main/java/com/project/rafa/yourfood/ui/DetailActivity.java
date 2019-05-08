@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.adapter.TabDetailAdapter;
 import com.project.rafa.yourfood.data.Food;
@@ -46,7 +47,8 @@ public class DetailActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         toolbar.setTitle(food.getName());
-        img.setImageResource(food.getImg());
+        String url = food.getImg();
+        Glide.with(getApplicationContext()).load(url).into(img);
 //        textView.setText(food.getIngredients());
 
 

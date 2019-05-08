@@ -1,5 +1,6 @@
 package com.project.rafa.yourfood.adapter;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.data.Food;
 
@@ -16,6 +18,7 @@ import java.util.List;
 
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder> {
 
+    Context context;
     List<Food> dataset;
     onFoodSelectedListener onFoodSelectedListener;
 
@@ -23,7 +26,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         void onFoodSelected(Food food);
     }
 
-    public FoodAdapter(onFoodSelectedListener onFoodSelectedListener) {
+    public FoodAdapter(Context context, onFoodSelectedListener onFoodSelectedListener) {
+        this.context = context;
         this.dataset = new ArrayList<>();
         this.onFoodSelectedListener = onFoodSelectedListener;
     }
@@ -39,7 +43,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
     @Override
     public void onBindViewHolder(@NonNull FoodViewHolder foodViewHolder, int i) {
         Food food = dataset.get(i);
-        foodViewHolder.imgFood.setImageResource(food.getImg());
+        String img = food.getImg();
+        Glide.with(context).load(img).into(foodViewHolder.imgFood);
         foodViewHolder.textFood.setText(food.getName());
 
         foodViewHolder.setOnFoodSelectedListener(food, onFoodSelectedListener );
