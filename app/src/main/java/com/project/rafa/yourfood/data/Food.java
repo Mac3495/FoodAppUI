@@ -8,18 +8,28 @@ public class Food implements Serializable {
     private String ingredients;
     private String preparation;
     private String type;
+    private String foodId;
     private int img;
 
     public Food(){
 
     }
 
-    public Food(String name, String ingredients, String preparation, String type, int img) {
+    public Food(String name, String ingredients, String preparation, String type, String foodId, int img) {
         this.name = name;
         this.ingredients = ingredients;
         this.preparation = preparation;
         this.type = type;
+        this.foodId = foodId;
         this.img = img;
+    }
+
+    public String getFoodId() {
+        return foodId;
+    }
+
+    public void setFoodId(String foodId) {
+        this.foodId = foodId;
     }
 
     public String getIngredients() {

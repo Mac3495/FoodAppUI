@@ -8,16 +8,26 @@ public class FoodUser implements Serializable {
     private String password;
     private String mail;
     private String description;
+    private String userId;
 
     public FoodUser(){
 
     }
 
-    public FoodUser(String user, String password, String mail, String description) {
+    public FoodUser(String user, String password, String mail, String description, String userId) {
         this.user = user;
         this.password = password;
         this.mail = mail;
         this.description = description;
+        this.userId = userId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUser() {

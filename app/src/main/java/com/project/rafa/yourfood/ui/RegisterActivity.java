@@ -63,10 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
 
-                            mProgressBar.setVisibility(View.GONE);
-                            FoodUser foodUser = new FoodUser(user, password, mail, description);
+                            String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
 
-                            FirebaseFirestore.getInstance().collection("user").document().set(foodUser);
+                            mProgressBar.setVisibility(View.GONE);
+                            FoodUser foodUser = new FoodUser(user, password, mail, description, id);
+
+                            FirebaseFirestore.getInstance().collection("user").document(id).set(foodUser);
 
                             Intent welcome = new Intent(getApplicationContext(),MainActivity.class);
                             startActivity(welcome);
