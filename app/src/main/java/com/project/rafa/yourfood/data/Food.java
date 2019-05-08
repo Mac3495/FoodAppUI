@@ -10,18 +10,22 @@ public class Food implements Serializable {
     private String type;
     private String foodId;
     private String img;
+    private String price;
+    private String userId;
 
     public Food(){
 
     }
 
-    public Food(String name, String ingredients, String preparation, String type, String foodId, String img) {
+    public Food(String name, String ingredients, String preparation, String type, String foodId, String img, String price, String userId) {
         this.name = name;
         this.ingredients = ingredients;
         this.preparation = preparation;
         this.type = type;
         this.foodId = foodId;
         this.img = img;
+        this.price = price;
+        this.userId = userId;
     }
 
     public String getFoodId() {
@@ -70,5 +74,21 @@ public class Food implements Serializable {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

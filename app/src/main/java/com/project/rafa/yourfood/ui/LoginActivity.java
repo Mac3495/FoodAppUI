@@ -78,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                 FirebaseUser user = mauth.getCurrentUser();  //Este objeto toma los datos del usuario que esta logueado
                 if(user != null){
                     Toast.makeText(LoginActivity.this, "Logueado", Toast.LENGTH_SHORT).show();
+                    Intent welcome = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(welcome);
                 }else{
                     Toast.makeText(LoginActivity.this, "No logeado", Toast.LENGTH_SHORT).show();
                 }
