@@ -4,15 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.adapter.FoodAdapter;
+import com.project.rafa.yourfood.data.FavoriteFood;
 import com.project.rafa.yourfood.data.Food;
 import com.project.rafa.yourfood.ui.DetailActivity;
 
@@ -39,6 +48,9 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
 
     RecyclerView feedRecycler;
     FoodAdapter foodAdapter;
+
+    List<FavoriteFood> list = new ArrayList<>();
+    List<Food> listFav = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -92,8 +104,44 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
     }
 
     void datos(){
-        List<Food> list = new ArrayList<>();
-        foodAdapter.setDataset(list);
+
+        String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        database.collection("favorite").whereEqualTo("uId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                list.clear();
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot doc : task.getResult()){
+                        FavoriteFood food = doc.toObject(FavoriteFood.class);
+                        list.add(food);
+
+                    }
+                }
+            }
+        });
+
+        for (FavoriteFood fav : list){
+            Log.i("Fav", fav.getFoodId());
+            database.collection("food").whereEqualTo("userId", id).whereEqualTo("foodId", fav.getFoodId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                    listFav.clear();
+                    if(task.isSuccessful()){
+                        for(DocumentSnapshot doc : task.getResult()){
+                            Food food = doc.toObject(Food.class);
+                            listFav.add(food);
+
+                        }
+                    }
+                }
+            });
+            foodAdapter.setDataset(listFav);
+        }
     }
 
     @Override
