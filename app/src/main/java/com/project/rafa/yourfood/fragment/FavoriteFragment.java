@@ -105,7 +105,7 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
 
     void datos(){
 
-        String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -120,28 +120,30 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
                         list.add(food);
 
                     }
+                    for (FavoriteFood fav : list){
+                        Log.i("Fav", fav.getFoodId());
+                        database.collection("food").whereEqualTo("foodId", fav.getFoodId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                listFav.clear();
+                                if(task.isSuccessful()){
+                                    for(DocumentSnapshot doc : task.getResult()){
+                                        Food food = doc.toObject(Food.class);
+                                        listFav.add(food);
+
+                                    }
+                                    foodAdapter.setDataset(listFav);
+                                }
+                            }
+                        });
+
+                    }
                 }
             }
         });
 
-        for (FavoriteFood fav : list){
-            Log.i("Fav", fav.getFoodId());
-            database.collection("food").whereEqualTo("userId", id).whereEqualTo("foodId", fav.getFoodId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                    listFav.clear();
-                    if(task.isSuccessful()){
-                        for(DocumentSnapshot doc : task.getResult()){
-                            Food food = doc.toObject(Food.class);
-                            listFav.add(food);
-
-                        }
-                    }
-                }
-            });
-            foodAdapter.setDataset(listFav);
-        }
     }
 
     @Override

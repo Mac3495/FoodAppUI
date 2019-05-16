@@ -119,10 +119,11 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
                         list.add(food);
 
                     }
+                    foodAdapter.setDataset(list);
                 }
             }
         });
-        foodAdapter.setDataset(list);
+
 
 
     }
