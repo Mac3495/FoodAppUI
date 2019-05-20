@@ -129,6 +129,8 @@ public class TextFragment extends Fragment {
             btn_delete.setVisibility(View.INVISIBLE);
         }
         else {
+            like.setVisibility(View.INVISIBLE);
+
             btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
