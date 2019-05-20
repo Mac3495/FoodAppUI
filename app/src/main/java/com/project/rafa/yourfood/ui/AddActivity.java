@@ -2,6 +2,7 @@ package com.project.rafa.yourfood.ui;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -37,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
-    private static final int REQUEST_CAMERA = 1;
+    private static final int REQUEST_CAMERA = 1888;
     private static final int SELECT_FILE = 1;
     public final int IMAGE_PICK_CODE = 1000;
 
@@ -129,14 +130,16 @@ public class AddActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        Toast.makeText(this, ""+ requestCode, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "code: "+ requestCode, Toast.LENGTH_SHORT).show();
         switch(requestCode) {
-            case 0:
+            case 1888:
                 Toast.makeText(this, ""+ resultCode + " --- " +RESULT_OK, Toast.LENGTH_SHORT).show();
                 if(resultCode == RESULT_OK){
                     Toast.makeText(this, "positron", Toast.LENGTH_SHORT).show();
-                    selectedImage = imageReturnedIntent.getData();
-                    img.setImageURI(selectedImage);
+                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    img.setImageBitmap(photo);
+//                    selectedImage = imageReturnedIntent.getData();
+//                    img.setImageURI(selectedImage);
                 }
 
                 break;

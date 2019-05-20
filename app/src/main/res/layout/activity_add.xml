@@ -80,14 +80,17 @@
 
                 </android.support.design.widget.TextInputLayout>
 
+                <!--android:src="@drawable/pic"-->
+                <!--android:layout_width="156dp"-->
+                <!--android:layout_height="128dp"-->
                 <ImageView
                     android:id="@+id/img_add_food"
-                    android:src="@drawable/pic"
-                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_camera"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="70dp"
                     android:layout_gravity="center"
-                    android:layout_width="156dp"
-                    android:layout_height="128dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:scaleType="centerCrop"/>
 
             </LinearLayout>
@@ -96,6 +99,7 @@
 
     </LinearLayout>
 
+    <!--android:src="@mipmap/ic_launcher"-->
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btn_add"
         android:layout_width="64dp"
@@ -105,7 +109,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginBottom="20dp"
         android:layout_marginRight="20dp"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/ic_chef"/>
 
     <ProgressBar
         android:id="@+id/progress_bar"

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">YourFood</string>
     <string name="title_activity_main">Your Food</string>
-    <string name="title_fav">Favoritos</string>
+    <string name="title_fav">Fav</string>
     <string name="title_feed">Feed</string>
     <string name="title_explore">Explorar</string>
     <string name="title_add">Agregar</string>
