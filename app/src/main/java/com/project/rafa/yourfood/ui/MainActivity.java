@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.fragment.ExploreFragment;
 import com.project.rafa.yourfood.fragment.FavoriteFragment;
@@ -51,6 +53,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_add:
                     startActivity(new Intent(getApplicationContext(), AddActivity.class));
+                    return true;
+                case R.id.navigation_my_profile:
+                    Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                    intent.putExtra("user", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                    startActivity(intent);
                     return true;
             }
             return false;
