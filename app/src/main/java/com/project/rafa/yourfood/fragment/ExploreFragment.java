@@ -140,10 +140,11 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
                                 // Add dish to list
                                 list.add(food);
                             }
+                            foodAdapter.setDataset(list);
                         }
                     }
                 });
-                foodAdapter.setDataset(list);
+//                foodAdapter.setDataset(list);
             }
         });
 
@@ -169,10 +170,11 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
                             continue;
                         list.add(food);
                     }
+                    foodAdapter.setDataset(list);
                 }
             }
         });
-        foodAdapter.setDataset(list);
+//        foodAdapter.setDataset(list);
     }
 
     @Override

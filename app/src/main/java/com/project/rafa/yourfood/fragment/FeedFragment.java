@@ -8,9 +8,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,11 +22,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.adapter.FoodAdapter;
+import com.project.rafa.yourfood.data.FollowUser;
 import com.project.rafa.yourfood.data.Food;
 import com.project.rafa.yourfood.ui.DetailActivity;
+import com.project.rafa.yourfood.ui.MainActivity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +53,7 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
     RecyclerView feedRecycler;
     FoodAdapter foodAdapter;
     List<Food> list = new ArrayList<>();
+    List<Food> followingUsersDishes = new ArrayList<>();
 
     private OnFragmentInteractionListener mListener;
 
@@ -93,7 +100,8 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
 
         foodAdapter = new FoodAdapter(getActivity().getApplicationContext(), this);
 
-        datos();
+//        datos();
+        followedUsersDishes();
 
         feedRecycler.setAdapter(foodAdapter);
 
@@ -108,27 +116,73 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
+//        database.collection("follow").whereEqualTo("followerUserId", id).get()
+
         database.collection("food").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
                 list.clear();
                 if(task.isSuccessful()){
-                    for(DocumentSnapshot doc : task.getResult()){
+                     for(DocumentSnapshot doc : task.getResult()){
                         Food food = doc.toObject(Food.class);
                         if (food.getUserId().equals(id))
                             continue;
                         list.add(food);
-
                     }
+
                     foodAdapter.setDataset(list);
                 }
             }
         });
-
-
-
     }
+
+    void followedUsersDishes(){
+        //list.clear();
+
+        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+
+        final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+//        database.collection("follow").whereEqualTo("followerUserId", id).get()
+        final ArrayList<FollowUser> followLinks = new ArrayList<>();
+        database.collection("follow").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                followLinks.clear();
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot doc : task.getResult()){
+//                        Food food = doc.toObject(Food.class);
+//                        if (food.getUserId().equals(id))
+//                            continue;
+//                        list.add(food);
+                        FollowUser followUser = doc.toObject(FollowUser.class);
+                        if (followUser.getFollowerUserId().equals(id)){
+                            followLinks.add(followUser);
+                        }
+                    }
+                    list.clear();
+                    for (FollowUser userLink: followLinks){
+                        Log.i("link", userLink.getFollowedUserId());
+                        database.collection("food").whereEqualTo("userId", userLink.getFollowedUserId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()){
+                                    for(DocumentSnapshot doc : task.getResult()){
+                                        Food food = doc.toObject(Food.class);
+                                        list.add(food);
+                                    }
+                                    foodAdapter.setDataset(list);
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+
     @Override
     public void onFoodSelected(Food food) {
         Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
