@@ -1,5 +1,6 @@
 package com.project.rafa.yourfood.ui;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -112,7 +113,9 @@ public class ProfileActivity extends AppCompatActivity implements FoodAdapter.on
 
     @Override
     public void onFoodSelected(Food food) {
-        
+        Intent intent = new Intent(getApplicationContext(), DetailActivity.class);
+        intent.putExtra("food", food);
+        startActivity(intent);
     }
 
     public void followUser(String followedUserId){
