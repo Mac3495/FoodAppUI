@@ -18,7 +18,7 @@ public class TabDetailAdapter extends FragmentStatePagerAdapter {
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
     }
-    public void addFragment(Fragment fragment,String title, String nombre, String ingrediente, String preparacion, String costo, String foodId) {
+    public void addFragment(Fragment fragment,String title, String nombre, String ingrediente, String preparacion, String costo, String foodId, String user) {
         Bundle bundle = new Bundle();
         bundle.putString("titulo",title);
         bundle.putString("nombre",nombre);
@@ -26,6 +26,7 @@ public class TabDetailAdapter extends FragmentStatePagerAdapter {
         bundle.putString("preparacion",preparacion);
         bundle.putString("costo",costo);
         bundle.putString("foodId",foodId);
+        bundle.putString("user",user);
         fragment.setArguments(bundle);
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);

@@ -69,9 +69,9 @@ public class DetailActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.htab_viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         adapter = new TabDetailAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TextFragment(), "Preparacion", food.getName(), food.getIngredients(), food.getPreparation(), food.getPrice(), food.getFoodId());
-        adapter.addFragment(new TextFragment(), "Ingredientes", food.getName(), food.getIngredients(), food.getPreparation(), food.getPrice(), food.getFoodId());
-        adapter.addFragment(new RecommendedFragment(), "Similares",  food.getName(), food.getIngredients(), food.getPreparation(), food.getPrice(), food.getFoodId());
+        adapter.addFragment(new TextFragment(), "Preparacion", food.getName(), food.getIngredients(), food.getPreparation(), food.getPrice(), food.getFoodId(), food.getUserId());
+        adapter.addFragment(new TextFragment(), "Ingredientes", food.getName(), food.getIngredients(), food.getPreparation(), food.getPrice(), food.getFoodId(), food.getUserId());
+        adapter.addFragment(new RecommendedFragment(), "Similares",  food.getName(), food.getIngredients(), food.getPreparation(), food.getPrice(), food.getFoodId(), food.getUserId());
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);

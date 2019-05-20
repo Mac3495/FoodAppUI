@@ -1,6 +1,8 @@
 package com.project.rafa.yourfood.fragment;
 
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.data.FavoriteFood;
 import com.project.rafa.yourfood.data.Food;
+import com.project.rafa.yourfood.data.FoodUser;
+import com.project.rafa.yourfood.ui.ProfileActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +34,19 @@ import java.util.List;
 public class TextFragment extends Fragment {
 
 
-    private String titulo="", nombre="", ingrediente="", preparacion="", costo="", foodId="";
+    private String titulo="", nombre="", ingrediente="", preparacion="", costo="", foodId="", user="";
     private boolean fav = false;
     private ImageView like;
+
+    final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
     public TextFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_text, container, false);
@@ -54,10 +61,12 @@ public class TextFragment extends Fragment {
                 preparacion = extras.getString("preparacion");
                 costo = extras.getString("costo");
                 foodId = extras.getString("foodId");
+                user = extras.getString("user");
             }
         }
         TextView text_detail = (TextView) v.findViewById(R.id.text_detail);
         TextView price = (TextView) v.findViewById(R.id.price);
+        final TextView usert = v.findViewById(R.id.user);
         like = (ImageView) v.findViewById(R.id.like);
         like.setAlpha(.3f);
         like.setOnClickListener(new View.OnClickListener() {
@@ -67,6 +76,31 @@ public class TextFragment extends Fragment {
             }
         });
         price.setText(costo + "Bs");
+
+
+
+        database.collection("user").whereEqualTo("userId", user).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(DocumentSnapshot doc : task.getResult()){
+                        FoodUser foodUser = doc.toObject(FoodUser.class);
+                        usert.setText("Por: " + foodUser.getUser());
+                    }
+                }
+            }
+        });
+
+
+        usert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("user", user);
+                startActivity(intent);
+            }
+        });
+
         if(titulo.compareTo("Preparacion") == 0){
             text_detail.setText(preparacion);
             like.setVisibility(View.GONE);
@@ -87,8 +121,6 @@ public class TextFragment extends Fragment {
     void datos(){
 
         final String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
-
-        final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
         database.collection("favorite").whereEqualTo("uId", id).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
