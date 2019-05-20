@@ -120,16 +120,19 @@ public class FavoriteFragment extends Fragment implements FoodAdapter.onFoodSele
                         list.add(food);
 
                     }
+                    listFav.clear();
                     for (FavoriteFood fav : list){
                         Log.i("Fav", fav.getFoodId());
                         database.collection("food").whereEqualTo("foodId", fav.getFoodId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
 
-                                listFav.clear();
+//                                listFav.clear();
                                 if(task.isSuccessful()){
                                     for(DocumentSnapshot doc : task.getResult()){
                                         Food food = doc.toObject(Food.class);
+                                        if (food.getUserId().equals(id))
+                                            continue;
                                         listFav.add(food);
 
                                     }

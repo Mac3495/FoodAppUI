@@ -104,7 +104,7 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
     void datos(){
         //list.clear();
 
-        String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
 
         final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -116,6 +116,8 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
                 if(task.isSuccessful()){
                     for(DocumentSnapshot doc : task.getResult()){
                         Food food = doc.toObject(Food.class);
+                        if (food.getUserId().equals(id))
+                            continue;
                         list.add(food);
 
                     }
