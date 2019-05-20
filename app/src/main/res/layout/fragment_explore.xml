@@ -6,14 +6,30 @@
     android:orientation="vertical"
     tools:context=".fragment.ExploreFragment">
 
-    <EditText
-        android:id="@+id/ed_explore_fragment"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Buscar por ingrediente"/>
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ed_explore_fragment"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:hint="Buscar por ingrediente"
+            android:maxLines="1"
+            android:inputType="text"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Buscar"
+            android:id="@+id/btn_search"/>
+
+    </LinearLayout>
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView

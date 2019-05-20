@@ -11,6 +11,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +50,8 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
 
     RecyclerView feedRecycler;
     FoodAdapter foodAdapter;
+    Button searchButton;
+    EditText searchText;
 
     private OnFragmentInteractionListener mListener;
 
@@ -88,6 +92,9 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_explore, container, false);
 
+        searchButton = (Button) rootView.findViewById(R.id.btn_search);
+        searchText = (EditText) rootView.findViewById(R.id.ed_explore_fragment);
+
         feedRecycler = (RecyclerView) rootView.findViewById(R.id.rv_explore_fragment);
 
         feedRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -97,6 +104,48 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
         datos();
 
         feedRecycler.setAdapter(foodAdapter);
+
+        // Implement Search
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String id = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+                final String ingredientsSearch = searchText.getText().toString().trim();
+
+                final FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+                database.collection("food").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                        list.clear();
+                        if(task.isSuccessful()){
+                            for(DocumentSnapshot doc : task.getResult()){
+                                Food food = doc.toObject(Food.class);
+                                if (food.getUserId().equals(id))
+                                    continue;
+
+                                // Look for ingredient present in dish
+                                String ingredients[] = food.getIngredients().split(",");
+                                Boolean ingredientPresent = false;
+                                for (String ingredient: ingredients){
+                                    if (ingredientsSearch.equals(ingredient)){
+                                        ingredientPresent = true;
+                                        break;
+                                    }
+                                }
+                                if (!ingredientPresent)
+                                    continue;
+
+                                // Add dish to list
+                                list.add(food);
+                            }
+                        }
+                    }
+                });
+                foodAdapter.setDataset(list);
+            }
+        });
 
         return rootView;
     }
