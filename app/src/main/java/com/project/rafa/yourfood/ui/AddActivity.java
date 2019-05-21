@@ -106,6 +106,7 @@ public class AddActivity extends AppCompatActivity {
 
         if(selectedImage != null){
             mProgressBar.setVisibility(View.VISIBLE);
+            Toast.makeText(getApplicationContext(), "PATH: "+selectedImage.getLastPathSegment(), Toast.LENGTH_LONG).show();
             final StorageReference reference = mStorage.child("imgFood").child(idU).child(selectedImage.getLastPathSegment());
             reference.putFile(selectedImage).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -139,8 +140,9 @@ public class AddActivity extends AppCompatActivity {
                     Bundle extras = imageReturnedIntent.getExtras();
                     Bitmap photo = (Bitmap) extras.get("data");
                     img.setImageBitmap(photo);
-//                    selectedImage = imageReturnedIntent.getData();
-//                    img.setImageURI(selectedImage);
+
+                    selectedImage = imageReturnedIntent.getData();
+                    img.setImageURI(selectedImage);
                 }
 
                 break;

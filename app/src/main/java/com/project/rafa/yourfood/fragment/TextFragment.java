@@ -24,6 +24,7 @@ import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.data.FavoriteFood;
 import com.project.rafa.yourfood.data.Food;
 import com.project.rafa.yourfood.data.FoodUser;
+import com.project.rafa.yourfood.ui.EditDishActivity;
 import com.project.rafa.yourfood.ui.LoginActivity;
 import com.project.rafa.yourfood.ui.MainActivity;
 import com.project.rafa.yourfood.ui.ProfileActivity;
@@ -42,6 +43,7 @@ public class TextFragment extends Fragment {
     private ImageView like;
     String myUserId;
     Button btn_delete;
+    Button btn_edit;
 
     final FirebaseFirestore database = FirebaseFirestore.getInstance();
 
@@ -71,6 +73,8 @@ public class TextFragment extends Fragment {
         }
 
         btn_delete = (Button) v.findViewById(R.id.btn_delete);
+        btn_edit = v.findViewById(R.id.btn_edit);
+
         TextView text_detail = (TextView) v.findViewById(R.id.text_detail);
         TextView price = (TextView) v.findViewById(R.id.price);
         final TextView usert = v.findViewById(R.id.user);
@@ -127,6 +131,7 @@ public class TextFragment extends Fragment {
         myUserId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
         if (!myUserId.equals(user)) {
             btn_delete.setVisibility(View.INVISIBLE);
+            btn_edit.setVisibility(View.INVISIBLE);
         }
         else {
             like.setVisibility(View.INVISIBLE);
@@ -140,6 +145,15 @@ public class TextFragment extends Fragment {
         }
 
         datos();
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity().getApplicationContext(), EditDishActivity.class);
+                intent.putExtra("foodId", foodId);
+                startActivity(intent);
+            }
+        });
 
         return v;
     }
@@ -242,9 +256,13 @@ public class TextFragment extends Fragment {
                             String docId = doc.getId();
                             database.collection("food").document(docId).delete();
 
+                            Intent i = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                            startActivity(i);
+
                             Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
                             intent.putExtra("user", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                             startActivity(intent);
                         }
                     }

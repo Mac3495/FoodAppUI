@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:layout_marginRight="20dp"
-                        android:hint="Ingredientes (Separados por una coma)"/>
+                        android:hint="Ingredientes (Separados por salto de linea)"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -88,7 +88,7 @@
 
     <!--android:src="@mipmap/ic_launcher"-->
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btn_add"
+        android:id="@+id/btn_edit_add"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:backgroundTint="@color/colorPrimary"

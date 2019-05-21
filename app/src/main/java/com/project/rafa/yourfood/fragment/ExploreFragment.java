@@ -126,13 +126,18 @@ public class ExploreFragment extends Fragment implements FoodAdapter.onFoodSelec
                                     continue;
 
                                 // Look for ingredient present in dish
-                                String ingredients[] = food.getIngredients().split(",");
+                                String lines[] = food.getIngredients().split("\n");
                                 Boolean ingredientPresent = false;
-                                for (String ingredient: ingredients){
-                                    if (ingredientsSearch.equals(ingredient)){
-                                        ingredientPresent = true;
-                                        break;
+                                for (String line: lines){
+                                    String words[] = line.split(" |, *");
+                                    for (String word: words) {
+                                        if (ingredientsSearch.toLowerCase().equals(word.toLowerCase())) {
+                                            ingredientPresent = true;
+                                            break;
+                                        }
                                     }
+                                    if (ingredientPresent)
+                                        break;
                                 }
                                 if (!ingredientPresent)
                                     continue;

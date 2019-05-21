@@ -58,9 +58,13 @@ public class EditUserActivity extends AppCompatActivity {
 
                 updateDescription();
 
+                Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(i);
+
                 Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
                 intent.putExtra("user", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
             }
         });

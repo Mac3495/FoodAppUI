@@ -17,6 +17,7 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("recommend/")
-    Call<HomeResponse> recommend(@Field("query_name") String query_name);
-
+//    Call<HomeResponse> recommend(@Field("query_name") String query_name);
+    Call<HomeResponse> recommend(@Field("query_name") String query_name,
+                                 @Field("user_id") String user_id);
 }

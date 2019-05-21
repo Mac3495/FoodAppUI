@@ -153,10 +153,6 @@ public class FeedFragment extends Fragment implements FoodAdapter.onFoodSelected
                 followLinks.clear();
                 if(task.isSuccessful()){
                     for(DocumentSnapshot doc : task.getResult()){
-//                        Food food = doc.toObject(Food.class);
-//                        if (food.getUserId().equals(id))
-//                            continue;
-//                        list.add(food);
                         FollowUser followUser = doc.toObject(FollowUser.class);
                         if (followUser.getFollowerUserId().equals(id)){
                             followLinks.add(followUser);

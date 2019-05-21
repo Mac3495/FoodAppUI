@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.project.rafa.yourfood.R;
 import com.project.rafa.yourfood.data.Food;
 import com.project.rafa.yourfood.data.HomeResponse;
@@ -72,7 +73,10 @@ public class RecommendedFragment extends Fragment {
 
     public void rest(final View view){
         mAPIService = ApiUtils.getApiServices();
-        Call<HomeResponse> request = mAPIService.recommend(nombre);
+//        Call<HomeResponse> request = mAPIService.recommend(nombre);
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
+//        Toast.makeText(getContext(), nombre+", "+userId, Toast.LENGTH_LONG).show();
+        Call<HomeResponse> request = mAPIService.recommend(nombre, userId);
 
         request.enqueue(new Callback<HomeResponse>() {
             @Override
@@ -81,6 +85,8 @@ public class RecommendedFragment extends Fragment {
                     try {
 
                         final List<Food> foodList = response.body().getDish_list();
+
+//                        Toast.makeText(getContext(), String.valueOf(foodList.size()), Toast.LENGTH_LONG).show();
 
                         TextView nombre1 = (TextView) view.findViewById(R.id.nombre1);
                         ImageView link1 = (ImageView) view.findViewById(R.id.link1);
@@ -132,12 +138,13 @@ public class RecommendedFragment extends Fragment {
 
 
 
-
                     } catch (Exception e) {
                         Log.d("onResponse", "There is an error");
                         e.printStackTrace();
                     }
                 }
+                else
+                    Toast.makeText(getContext(), "Fallo algo", Toast.LENGTH_LONG).show();
             }
 
             @Override
