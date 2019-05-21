@@ -1,8 +1,10 @@
 package com.project.rafa.yourfood.data;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
-public class Food implements Serializable {
+public class Food extends JSONObject implements Serializable {
 
     private String name;
     private String ingredients;
