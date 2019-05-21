@@ -23,6 +23,7 @@ import com.project.rafa.yourfood.adapter.FoodAdapter;
 import com.project.rafa.yourfood.data.FollowUser;
 import com.project.rafa.yourfood.data.Food;
 import com.project.rafa.yourfood.data.FoodUser;
+//import com.project.rafa.yourfood.data
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,15 @@ public class ProfileActivity extends AppCompatActivity implements FoodAdapter.on
         myUserId = FirebaseAuth.getInstance().getCurrentUser().getUid().toString();
 
         if (myUserId.equals(user)) {
-            followButton.setVisibility(View.INVISIBLE);
+//            followButton.setVisibility(View.INVISIBLE);
+            followButton.setText("Editar");
+            followButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent updateData = new Intent(getApplicationContext(), EditUserActivity.class);
+                    startActivity(updateData);
+                }
+            });
         }
         else{
             checkFollowing(user);
