@@ -1,9 +1,11 @@
 package com.project.rafa.yourfood.fragment;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import com.project.rafa.yourfood.data.Food;
 import com.project.rafa.yourfood.data.HomeResponse;
 import com.project.rafa.yourfood.remote.ApiService;
 import com.project.rafa.yourfood.remote.ApiUtils;
+import com.project.rafa.yourfood.ui.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,12 +80,22 @@ public class RecommendedFragment extends Fragment {
                 if(response.isSuccessful()){
                     try {
 
-                        List<Food> foodList = response.body().getDish_list();
+                        final List<Food> foodList = response.body().getDish_list();
 
                         TextView nombre1 = (TextView) view.findViewById(R.id.nombre1);
                         ImageView link1 = (ImageView) view.findViewById(R.id.link1);
                         nombre1.setText(foodList.get(0).getName());
                         Glide.with(view).load(foodList.get(0).getImg()).into(link1);
+
+                        CardView card1 = (CardView) view.findViewById(R.id.card1);
+                        card1.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                                intent.putExtra("food", foodList.get(0));
+                                startActivity(intent);
+                            }
+                        });
 
 
                         TextView nombre2 = (TextView) view.findViewById(R.id.nombre2);
@@ -90,11 +103,33 @@ public class RecommendedFragment extends Fragment {
                         nombre2.setText(foodList.get(1).getName());
                         Glide.with(view).load(foodList.get(1).getImg()).into(link2);
 
+                        CardView card2 = (CardView) view.findViewById(R.id.card2);
+                        card2.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                                intent.putExtra("food", foodList.get(1));
+                                startActivity(intent);
+                            }
+                        });
+
+
 
                         TextView nombre3 = (TextView) view.findViewById(R.id.nombre3);
                         ImageView link3 = (ImageView) view.findViewById(R.id.link3);
                         nombre3.setText(foodList.get(2).getName());
                         Glide.with(view).load(foodList.get(2).getImg()).into(link3);
+
+                        CardView card3 = (CardView) view.findViewById(R.id.card3);
+                        card3.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(getActivity().getApplicationContext(), DetailActivity.class);
+                                intent.putExtra("food", foodList.get(2));
+                                startActivity(intent);
+                            }
+                        });
+
 
 
 
