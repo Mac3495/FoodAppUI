@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.rafa.yourfood.R;
+import com.project.rafa.yourfood.ResetPasswordActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,6 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText edUser, edPassword;
     private FirebaseAuth mauth;
     FirebaseAuth.AuthStateListener auth_listener;
+
+    TextView forgotten;
 
     private ProgressBar mProgressBar;
 
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
+
+        forgotten = findViewById(R.id.tv_forgotten);
 
         btnLogin = findViewById(R.id.btn_login);
         btnRegister = findViewById(R.id.btn_register);
@@ -56,6 +62,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 registerUser();
+            }
+        });
+
+        forgotten.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ResetPasswordActivity.class);
+                startActivity(intent);
             }
         });
     }

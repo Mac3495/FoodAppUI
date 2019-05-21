@@ -1,5 +1,6 @@
 package com.project.rafa.yourfood.ui;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -56,6 +57,11 @@ public class EditUserActivity extends AppCompatActivity {
                 updatePassword();
 
                 updateDescription();
+
+                Intent intent = new Intent(getApplicationContext(), ProfileActivity.class);
+                intent.putExtra("user", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
     }

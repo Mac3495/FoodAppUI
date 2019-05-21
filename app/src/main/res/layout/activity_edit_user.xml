@@ -84,6 +84,14 @@
                 android:textAllCaps="false"
                 android:text="Actualizar Datos"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"
+                android:textSize="15dp"
+                android:text="Si desea editar sólo la descripicón, deje en blanco los campos de contraseña"/>
         </LinearLayout>
 
     </ScrollView>

@@ -241,9 +241,9 @@ public class TextFragment extends Fragment {
                         if (dish.getFoodId().equals(foodId)){
                             String docId = doc.getId();
                             database.collection("food").document(docId).delete();
-//                            getActivity().onBackPressed();
-//                            getActivity().finish();
-                            Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+
+                            Intent intent = new Intent(getActivity().getApplicationContext(), ProfileActivity.class);
+                            intent.putExtra("user", FirebaseAuth.getInstance().getCurrentUser().getUid().toString());
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
