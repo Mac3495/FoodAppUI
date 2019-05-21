@@ -38,7 +38,7 @@ public class AddActivity extends AppCompatActivity {
 
     private ProgressBar mProgressBar;
 
-    private static final int REQUEST_CAMERA = 1888;
+    private static final int REQUEST_CAMERA = 0;
     private static final int SELECT_FILE = 1;
     public final int IMAGE_PICK_CODE = 1000;
 
@@ -132,11 +132,12 @@ public class AddActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
         Toast.makeText(this, "code: "+ requestCode, Toast.LENGTH_SHORT).show();
         switch(requestCode) {
-            case 1888:
+            case 0:
                 Toast.makeText(this, ""+ resultCode + " --- " +RESULT_OK, Toast.LENGTH_SHORT).show();
-                if(resultCode == RESULT_OK){
+                if(requestCode == REQUEST_CAMERA && resultCode == RESULT_OK){
                     Toast.makeText(this, "positron", Toast.LENGTH_SHORT).show();
-                    Bitmap photo = (Bitmap) imageReturnedIntent.getExtras().get("data");
+                    Bundle extras = imageReturnedIntent.getExtras();
+                    Bitmap photo = (Bitmap) extras.get("data");
                     img.setImageBitmap(photo);
 //                    selectedImage = imageReturnedIntent.getData();
 //                    img.setImageURI(selectedImage);
