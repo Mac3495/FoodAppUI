@@ -68,7 +68,10 @@
                 android:layout_height="wrap_content"
                 android:textAllCaps="false"
                 android:text="Eliminar"
-                android:id="@+id/btn_delete"/>
+                android:id="@+id/btn_delete"
+                android:background="@color/colorPrimary"
+                android:textColor="#fff"
+                android:textSize="15dp"/>
 
         </LinearLayout>
 

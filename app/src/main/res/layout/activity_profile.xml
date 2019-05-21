@@ -40,7 +40,10 @@
                         android:textAllCaps="false"
                         android:layout_marginRight="20dp"
                         android:text="Seguir"
-                        android:id="@+id/btn_follow"/>
+                        android:id="@+id/btn_follow"
+                        android:background="@color/colorPrimary"
+                        android:textColor="#fff"
+                        android:textSize="15dp"/>
 
                 </LinearLayout>
 
